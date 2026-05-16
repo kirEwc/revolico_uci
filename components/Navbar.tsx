@@ -1,16 +1,40 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { Search, Heart, User, Menu } from "lucide-react";
-import { Logo } from "./Logo";
 import { ThemeToggle } from "./ThemeToggle";
-import { cn } from "@/lib/utils";
+import { useSyncExternalStore } from "react";
+
+function getDarkSnapshot(): boolean {
+  return document.documentElement.classList.contains("dark");
+}
+
+function subscribe(cb: () => void): () => void {
+  const observer = new MutationObserver(cb);
+  observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
+  return () => observer.disconnect();
+}
+
+function getServerSnapshot(): boolean {
+  return false;
+}
 
 export default function Navbar() {
+  const dark = useSyncExternalStore(subscribe, getDarkSnapshot, getServerSnapshot);
+
   return (
     <header className="sticky top-0 z-40 border-b border-border/60 bg-background/80 backdrop-blur-xl">
       <div className="mx-auto flex h-16 max-w-7xl items-center gap-4 px-4 md:px-6">
-        <Link href="/"><Logo /></Link>
+        <Link href="/" className="flex items-center">
+          <Image
+            src={dark ? "/assets/logo-oscuro.ico" : "/assets/logo-claro.ico"}
+            alt="Logo Revolico UCI"
+            width={80}
+            height={80}
+            className="h-20 w-auto py-2"
+          />
+        </Link>
 
         <div className="relative hidden flex-1 md:block max-w-xl mx-4">
           <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />

@@ -1,10 +1,25 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { LayoutDashboard, Package, MessageSquare, BarChart3, Star, Megaphone, Store, Settings, Plus, TrendingUp, Eye, ShoppingBag, MoreHorizontal } from "lucide-react";
-import { Logo } from "@/components/Logo";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { products } from "@/lib/data";
+import { useSyncExternalStore } from "react";
+
+function getDarkSnapshot(): boolean {
+  return document.documentElement.classList.contains("dark");
+}
+
+function subscribe(cb: () => void): () => void {
+  const observer = new MutationObserver(cb);
+  observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
+  return () => observer.disconnect();
+}
+
+function getServerSnapshot(): boolean {
+  return false;
+}
 
 const nav = [
   { label: "Inicio", icon: LayoutDashboard },
@@ -18,12 +33,21 @@ const nav = [
 ];
 
 export default function DashboardPage() {
+  const dark = useSyncExternalStore(subscribe, getDarkSnapshot, getServerSnapshot);
   return (
     <div className="min-h-screen bg-background">
       <div className="flex">
         {/* Sidebar */}
         <aside className="sticky top-0 hidden h-screen w-64 shrink-0 flex-col border-r border-border/60 bg-card p-5 md:flex">
-          <Link href="/" className="mb-8 px-2"><Logo /></Link>
+          <Link href="/" className="mb-8 flex items-center px-2">
+            <Image
+              src={dark ? "/assets/logo-oscuro.ico" : "/assets/logo-claro.ico"}
+              alt="Logo Revolico UCI"
+              width={80}
+              height={80}
+              className="h-20 w-auto py-2"
+            />
+          </Link>
           <nav className="flex-1 space-y-1">
             {nav.map((n, i) => {
               const Icon = n.icon;
@@ -45,7 +69,15 @@ export default function DashboardPage() {
         <div className="flex-1">
           {/* Topbar */}
           <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-border/60 bg-background/85 px-4 backdrop-blur md:px-8">
-            <div className="md:hidden"><Link href="/"><Logo /></Link></div>
+            <div className="md:hidden"><Link href="/" className="flex items-center">
+                <Image
+                  src={dark ? "/assets/logo-oscuro.ico" : "/assets/logo-claro.ico"}
+                  alt="Logo Revolico UCI"
+                  width={32}
+                  height={32}
+                  className="h-8 w-auto"
+                />
+              </Link></div>
             <div className="hidden md:block">
               <h1 className="text-lg font-semibold">Resumen</h1>
               <p className="text-xs text-muted-foreground">Bienvenido de vuelta, Café del Pueblo</p>
