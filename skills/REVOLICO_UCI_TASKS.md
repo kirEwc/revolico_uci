@@ -6,13 +6,7 @@
 
 ## En progreso
 
-- [ ] Página Categoría (`/categoria/[slug]`) con filtros, grid, orden
-- [ ] Página Producto (`/producto/[id]`) con galería, WhatsApp, tabs
-- [ ] Página Tienda (`/tienda/[id]`) con cover, tabs, productos
-- [ ] Dashboard vendedor (`/dashboard`)
 - [ ] Autenticación (`/login`, `/registro`)
-- [ ] Favoritos (`/favoritos`)
-- [ ] Búsqueda (`/buscar`)
 
 ## Completadas
 
@@ -28,3 +22,9 @@
 - [x] Componente `ProductCard`
 - [x] Componente `WhatsAppButton`
 - [x] Landing page (`/`) con hero section
+- [x] Página Categoría (`/categoria/[slug]`) con filtros, grid, orden
+- [x] Página Producto (`/producto/[id]`) con galería, WhatsApp, tabs
+- [x] Página Tienda (`/tienda/[id]`) con cover, tabs, productos
+- [x] Dashboard vendedor (`/dashboard`)
+- [x] Favoritos (`/favoritos`)
+- [x] Búsqueda (`/buscar`)

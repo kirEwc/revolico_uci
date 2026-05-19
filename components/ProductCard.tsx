@@ -3,8 +3,12 @@
 import Link from "next/link";
 import { Star, Heart } from "lucide-react";
 import type { Product } from "@/lib/data";
+import { useFavorites } from "@/lib/favorites";
 
 export default function ProductCard({ p }: { p: Product }) {
+  const { isFavorite, toggle } = useFavorites();
+  const fav = isFavorite(p.id);
+
   return (
     <Link href={`/producto/${p.id}`} className="group block">
       <div className="relative overflow-hidden rounded-2xl bg-card shadow-card ring-1 ring-border/60 transition hover:-translate-y-0.5 hover:shadow-soft">
@@ -13,8 +17,12 @@ export default function ProductCard({ p }: { p: Product }) {
           {p.badge && (
             <span className="absolute left-3 top-3 rounded-full bg-orange px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-primary-foreground shadow-soft">{p.badge}</span>
           )}
-          <button className="absolute right-3 top-3 grid h-8 w-8 place-items-center rounded-full bg-background/80 text-muted-foreground backdrop-blur transition hover:text-orange" aria-label="Favorito">
-            <Heart className="h-4 w-4" />
+          <button
+            onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggle(p.id); }}
+            className={`absolute right-3 top-3 grid h-8 w-8 place-items-center rounded-full backdrop-blur transition ${fav ? "bg-orange text-white" : "bg-background/80 text-muted-foreground hover:text-orange"}`}
+            aria-label={fav ? "Quitar de favoritos" : "Agregar a favoritos"}
+          >
+            <Heart className={`h-4 w-4 ${fav ? "fill-white" : ""}`} />
           </button>
         </div>
         <div className="space-y-1.5 p-4">

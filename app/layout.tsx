@@ -3,6 +3,7 @@ import { Poppins } from "next/font/google";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import BottomNav from "@/components/BottomNav";
+import { FavoritesProvider } from "@/lib/favorites";
 import "./globals.css";
 
 const poppins = Poppins({
@@ -33,10 +34,12 @@ export default function RootLayout({
         }} />
       </head>
       <body className="min-h-screen bg-background pb-20 md:pb-0">
-        <Navbar />
-        <main>{children}</main>
-        <Footer />
-        <BottomNav />
+        <FavoritesProvider>
+          <Navbar />
+          <main>{children}</main>
+          <Footer />
+          <BottomNav />
+        </FavoritesProvider>
       </body>
     </html>
   );

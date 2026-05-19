@@ -8,7 +8,7 @@ const items = [
   { href: "/", label: "Inicio", icon: Home },
   { href: "/categoria/alimentos", label: "Categorías", icon: Grid3x3 },
   { href: "/tienda/cafe-del-pueblo", label: "Tiendas", icon: Store },
-  { href: "/dashboard", label: "Mi tienda", icon: Heart },
+  { href: "/favoritos", label: "Favoritos", icon: Heart },
   { href: "/dashboard", label: "Perfil", icon: User },
 ];
 
