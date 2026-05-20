@@ -7,9 +7,9 @@
 ## En progreso
 
 ### Infraestructura
-- [ ] Instalar `@supabase/supabase-js` y `zustand`
-- [ ] Crear `lib/supabase.ts` - cliente Supabase con variables de entorno
-- [ ] Crear `lib/store/useAuthStore.ts` - Zustand store para auth (user, login, logout, isLoading)
+- [x] Instalar `@supabase/supabase-js` y `zustand`
+- [x] Crear `lib/supabase.ts` - cliente Supabase con variables de entorno
+- [x] Crear `lib/store/useAuthStore.ts` - Zustand store para auth (user, login, logout, isLoading)
 
 ### Base de Datos (Supabase)
 - [ ] Crear tabla `usuarios` (id, email, nombre, created_at)
@@ -18,24 +18,24 @@
 - [ ] Crear tabla `verification_codes` (email, codigo, expiracion)
 
 ### Backend API (Next.js Routes)
-- [ ] `POST /api/auth/send-code` - Generar código 6 dígitos, guardar en DB, enviar email
-- [ ] `POST /api/auth/verify-code` - Validar código, crear sesión (cookie o Supabase session)
-- [ ] `GET /api/auth/me` - Devolver usuario actual
-- [ ] `POST /api/auth/logout` - Cerrar sesión
+- [x] `POST /api/auth/send-code` - Generar código 6 dígitos, guardar en DB, enviar email
+- [x] `POST /api/auth/verify-code` - Validar código, crear sesión (cookie o Supabase session)
+- [x] `GET /api/auth/me` - Devolver usuario actual
+- [x] `POST /api/auth/logout` - Cerrar sesión
 
 ### Email (Nodemailer)
-- [ ] Diseñar template HTML con branding Revólico UCI
-- [ ] Incluir logo e imagen de la plataforma
-- [ ] Diseño responsive y limpio
+- [x] Diseñar template HTML con branding Revólico UCI
+- [x] Incluir logo e imagen de la plataforma
+- [x] Diseño responsive y limpio
 
 ### Frontend Auth
-- [ ] Componente `ProtectedRoute.tsx` - Proteger rutas autenticadas
-- [ ] `/app/login/page.tsx` - Formulario email → enviar código
-- [ ] `/app/registro/page.tsx` - Formulario registro → verificar código → crear cuenta
+- [x] Componente `ProtectedRoute.tsx` - Proteger rutas autenticadas
+- [x] `/app/login/page.tsx` - Formulario email → enviar código
+- [x] `/app/registro/page.tsx` - Formulario registro → verificar código → crear cuenta
 
 ### Dashboard Vendedor
-- [ ] Editar perfil (avatar, banner con Cloudinary, bio, teléfono)
-- [ ] CRUD productos (crear, editar, eliminar, listar)
+- [x] Editar perfil (avatar, banner con Cloudinary, bio, teléfono)
+- [x] CRUD productos (crear, editar, eliminar, listar)
 
 ## Completadas
 

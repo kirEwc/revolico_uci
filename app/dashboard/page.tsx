@@ -6,6 +6,7 @@ import { LayoutDashboard, Package, MessageSquare, BarChart3, Star, Megaphone, St
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { products } from "@/lib/data";
 import { useSyncExternalStore } from "react";
+import ProtectedRoute from "@/components/ProtectedRoute";
 
 function getDarkSnapshot(): boolean {
   return document.documentElement.classList.contains("dark");
@@ -35,6 +36,7 @@ const nav = [
 export default function DashboardPage() {
   const dark = useSyncExternalStore(subscribe, getDarkSnapshot, getServerSnapshot);
   return (
+    <ProtectedRoute>
     <div className="min-h-screen bg-background">
       <div className="flex">
         {/* Sidebar */}
@@ -200,6 +202,7 @@ export default function DashboardPage() {
         </div>
       </div>
     </div>
+    </ProtectedRoute>
   );
 }
 
