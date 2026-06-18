@@ -12,10 +12,10 @@
 - [x] Crear `lib/store/useAuthStore.ts` - Zustand store para auth (user, login, logout, isLoading)
 
 ### Base de Datos (Supabase)
-- [ ] Crear tabla `usuarios` (id, email, nombre, created_at)
-- [ ] Crear tabla `perfiles` (usuario_id, avatar_url, banner_url, bio, telefono)
-- [ ] Crear tabla `productos` (vendor_id, titulo, precio, imagenes, categoria, descripcion, etc.)
-- [ ] Crear tabla `verification_codes` (email, codigo, expiracion)
+- [x] Crear tabla `usuarios` (id, email, nombre, created_at)
+- [x] Crear tabla `perfiles` (usuario_id, avatar_url, banner_url, bio, telefono)
+- [x] Crear tabla `productos` (vendor_id, titulo, precio, imagenes, categoria, descripcion, etc.)
+- [x] Crear tabla `verification_codes` (email, codigo, expiracion)
 
 ### Backend API (Next.js Routes)
 - [x] `POST /api/auth/send-code` - Generar código 6 dígitos, guardar en DB, enviar email

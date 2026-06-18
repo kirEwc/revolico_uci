@@ -59,6 +59,7 @@ export default function RegistroPage() {
           email: formData.email,
           codigo: code,
           nombre: formData.nombre,
+          telefono: formData.telefono,
         }),
       });
 

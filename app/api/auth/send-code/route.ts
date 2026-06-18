@@ -7,8 +7,24 @@ const serviceRoleKey = process.env.service_role_key!
 
 const supabaseAdmin = createClient(supabaseUrl, serviceRoleKey)
 
-function generateVerificationCode(): string {
-  return Math.floor(100000 + Math.random() * 900000).toString()
+async function generateUniqueCode(supabaseAdmin: ReturnType<typeof createClient>): Promise<string> {
+  let codigo: string
+  let exists = true
+  
+  do {
+    codigo = Math.floor(100000 + Math.random() * 900000).toString()
+    
+    const { data: existing } = await supabaseAdmin
+      .from('verification_codes')
+      .select('id')
+      .eq('codigo', codigo)
+      .gt('expiracion', new Date().toISOString())
+      .limit(1)
+    
+    exists = existing && existing.length > 0
+  } while (exists)
+  
+  return codigo!
 }
 
 function generateEmailHTML(code: string, isRegistro: boolean): string {
@@ -157,8 +173,8 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Generar código de 6 dígitos
-    const codigo = generateVerificationCode()
+    // Generar código de 6 dígitos único
+    const codigo = await generateUniqueCode(supabaseAdmin)
 
     // Calcular expiración (10 minutos)
     const expiracion = new Date(Date.now() + 10 * 60 * 1000).toISOString()

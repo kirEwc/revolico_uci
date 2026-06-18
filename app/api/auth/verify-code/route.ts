@@ -10,7 +10,7 @@ const supabaseAdmin = createClient(supabaseUrl, serviceRoleKey)
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const { email, codigo, nombre } = body
+    const { email, codigo, nombre, telefono } = body
 
     if (!email || !codigo) {
       return NextResponse.json(
@@ -61,7 +61,10 @@ export async function POST(request: NextRequest) {
         )
       }
 
-      // Crear usuario en auth de Supabase
+      // Verificar si ya existe en Auth de Supabase
+      let authUserId: string
+
+      // Intentar crear usuario, si ya existe capturar el error
       const { data: authData, error: authError } = await supabaseAdmin.auth.admin.createUser({
         email,
         email_confirm: true,
@@ -69,18 +72,34 @@ export async function POST(request: NextRequest) {
       })
 
       if (authError) {
-        console.error('Error creating auth user:', authError)
-        return NextResponse.json(
-          { error: 'Error al crear usuario' },
-          { status: 500 }
-        )
+        if (authError.message.includes('email_exists') || authError.status === 422) {
+          // El usuario ya existe en Auth, buscar su ID
+          const { data: users } = await supabaseAdmin.auth.admin.listUsers()
+          const existingAuthUser = users?.users.find(u => u.email === email)
+          if (existingAuthUser) {
+            authUserId = existingAuthUser.id
+          } else {
+            return NextResponse.json(
+              { error: 'Error al verificar usuario existente' },
+              { status: 500 }
+            )
+          }
+        } else {
+          console.error('Error creating auth user:', authError)
+          return NextResponse.json(
+            { error: 'Error al crear usuario' },
+            { status: 500 }
+          )
+        }
+      } else {
+        authUserId = authData.user.id
       }
 
       // Crear usuario en tabla usuarios
       const { data: newUser, error: userError } = await supabaseAdmin
         .from('usuarios')
         .insert({
-          id: authData.user.id,
+          id: authUserId,
           email,
           nombre,
         })
@@ -95,11 +114,12 @@ export async function POST(request: NextRequest) {
         )
       }
 
-      // Crear perfil vacío
+      // Crear perfil con telefono
       await supabaseAdmin
         .from('perfiles')
         .insert({
-          usuario_id: authData.user.id,
+          usuario_id: authUserId,
+          telefono: telefono || null,
         })
 
       usuario = newUser
